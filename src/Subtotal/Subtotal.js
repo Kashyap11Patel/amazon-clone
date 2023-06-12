@@ -1,8 +1,10 @@
 import React from 'react'
 import './Subtotal.css'
 import { useStateValue } from '../StateProvider'
+import { useNavigate } from 'react-router-dom'
 
 function Subtotal() {
+  const navigate = useNavigate()
   const [{ basket }, dispatch] = useStateValue()
   const getTotal = () => {
     let total = 0
@@ -20,7 +22,7 @@ function Subtotal() {
         This order contains a gift
       </small>
 
-      <button>Proceed to checkout</button>
+      <button onClick={(e) => navigate('/payment')}>Proceed to checkout</button>
     </div>
   )
 }
