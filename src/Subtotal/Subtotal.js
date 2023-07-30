@@ -2,20 +2,16 @@ import React from 'react'
 import './Subtotal.css'
 import { useStateValue } from '../StateProvider'
 import { useNavigate } from 'react-router-dom'
+import { getBasketTotal } from '../reducer'
 
 function Subtotal() {
   const navigate = useNavigate()
   const [{ basket }, dispatch] = useStateValue()
-  const getTotal = () => {
-    let total = 0
-    basket?.map((item, id) => (total = total + item.price))
-    return total
-  }
   return (
     <div className='subtotal'>
       <p>
         Subtotal {basket?.length} items:
-        <strong>{currencyFormat(getTotal())}</strong>
+        <strong>{getBasketTotal(basket)}</strong>
       </p>
       <small className='subtotal__gift'>
         <input type='checkbox' />
@@ -25,10 +21,6 @@ function Subtotal() {
       <button onClick={(e) => navigate('/payment')}>Proceed to checkout</button>
     </div>
   )
-}
-
-function currencyFormat(num) {
-  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 export default Subtotal
